@@ -1,0 +1,24 @@
+.sidebar-nav-list { /* 사이드바 네비게이션 리스트 */
+  list-style: none; /* 기본적으로 표시되는 리스트 기호를 제거 */
+  display: flex; /* 요소를 수평으로 나열합니다. */
+  flex-direction: column; /* 요소를 수직으로 쌓습니다. */
+  padding: 2rem 3rem; /* 상하 32px, 좌우 48px */
+  gap: 1rem; /* 메뉴 간격 16px */
+}
+
+.sidebar-nav-link { /* 사이드바 네비게이션 링크 */
+  color: inherit; /* 부모 요소로부터 색상을 상속받음 */
+  font-weight: normal; /* 글씨 두께 normal */
+  text-decoration: none; /* 밑줄 없음 */
+  cursor: pointer; /* 마우스를 올리면 클릭할 수 있는 아이콘으로 변경 */
+  transition: color 0.15s ease-in-out; /* 색상이 0.15초 동안 부드럽게 변하도록 설정 */
+}
+
+.sidebar-nav-link:hover { /* 사이드바 네비게이션 링크에 마우스를 올리면 */
+  color: #2563eb; /* 글씨 색상이 #2563eb로 변함 */
+}
+
+.sidebar-nav-link.active { /* 사이드바 네비게이션 링크가 활성화되면 */
+  color: #2563eb; /* 글씨 색상이 #2563eb로 변함 */
+  font-weight: bold; /* 글씨를 굵게 */
+}

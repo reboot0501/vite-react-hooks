@@ -1,0 +1,59 @@
+# 의존성 패키지 (Dependencies)
+node_modules/
+.pnp
+.pnp.js
+
+# 빌드 및 출력물 (Production build output)
+dist/
+dist-ssr/
+build/
+out/
+*.tsbuildinfo
+
+# 로그 파일 (Logs)
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 환경 변수 및 비밀 키 (Environment variables)
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 에디터 및 개발 도구 (Editor directories and files)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# OS 임시 파일 (Operating System files)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# 캐시 및 테스트 (Cache & Test coverage)
+.eslintcache
+.stylelintcache
+.cache/
+.vite/
+coverage/
+.nyc_output/

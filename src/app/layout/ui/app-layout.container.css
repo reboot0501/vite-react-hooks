@@ -1,0 +1,22 @@
+.page-wrapper { /* 전체 페이지를 감싸는 컨테이너 */
+  height: 100vh; /* 뷰포트(화면) 높이의 100% */
+  display: flex; /* 요소를 수평으로 나열합니다. */
+  flex-direction: column; /* 요소를 수직으로 쌓습니다. */
+}
+
+.page-body { /* 헤더 아래의 본문 영역 */
+  display: flex; /* 요소를 수평으로 나열합니다. */
+  flex-direction: row; /* 요소를 수평으로 나열합니다. */
+  flex: 1; /* 남은 공간을 끝까지 확장 */
+  min-height: 0; /* 요소의 최소 크기를 0으로 설정 */
+}
+
+.app-sidebar { /* 사이드바 영역 */
+  flex: 0 0 20%; /* flex-grow: 0 (늘어나지 않음), flex-shrink: 0 (줄어들지 않음), flex-basis: 20% (기본 크기 1/5) */
+  overflow-y: scroll; /* 스크롤 표시 */
+}
+
+.app-main { /* 메인 콘텐츠 영역 */
+  flex: 1; /* 남은 공간을 끝까지 확장 */
+  min-width: 0; /* 요소의 최소 크기를 0으로 설정 */
+}
