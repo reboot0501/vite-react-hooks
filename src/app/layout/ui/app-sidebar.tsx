@@ -1,11 +1,5 @@
-import type { CSSProperties } from "react";
 import { NavLink } from "react-router-dom";
 import "./app-sidebar.css";
-
-interface SidebarProps {
-  className?: string;
-  style?: CSSProperties;
-}
 
 const MENU_ITEMS = [
   { name: "메뉴1", path: "/menu1" },
@@ -15,9 +9,9 @@ const MENU_ITEMS = [
   { name: "메뉴5", path: "/menu5" },
 ];
 
-const Sidebar = ({ className, style }: SidebarProps) => {
+const Sidebar = () => {
   return (
-    <aside className={`sidebar ${className ?? ""}`.trim()} style={style}>
+    <aside className="app-sidebar">
       <nav>
         <ul className="sidebar-nav-list">
           {MENU_ITEMS.map((item) => (

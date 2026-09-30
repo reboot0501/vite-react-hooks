@@ -1,3 +1,8 @@
+.app-main {
+  flex: 1; /* 남은 공간을 끝까지 확장 */
+  min-width: 0; /* 요소의 최소 크기를 0으로 설정 */
+}
+
 .main-header { /* 메인 헤더 영역 */ 
   margin: 0 1.5rem; /* 상하 0px, 좌우 24px */
   padding: 1.5rem 0; /* 상하 24px, 좌우 0px */

@@ -1,32 +1,45 @@
-.header {
+.page-header {
   /* 로고 + ( 메뉴 + 로그아웃 ) 전체를 감싸는 컨테이너 */
   background-color: #0b2041;
   color: white;
   display: flex; /* 요소를 수평으로 나열합니다. */
   align-items: center; /* 요소를 수직축 방향(세로)을 따라 가운데 정렬합니다. */
   padding: 0; /* 16px */
-  gap: 0; /* 로고와 header-right 영역 사이 간격 24px */
+  gap: 0; /* 로고와 page-header-right 영역 사이 간격 24px */
 }
 
-.header-logo {
-  /* header-logo 영역 */
+.page-header-logo {
+  /* page-header-logo 영역 */
   position: relative; /* 가상 요소를 배치하기 위한 기준점 */
   flex-grow: 0; /* Flex 컨테이너 내에서 늘어나지 않음(기본값 0과 동일). */
   flex-shrink: 0; /* Flex 컨테이너 내에서 줄어들지 않음. */
   flex-basis: 20%; /* 기본 크기를 정확히 **20%(1/5)**로 유지 */
   box-sizing: border-box;
-  padding: 24px 0; /* 로고의 상하 여백 24px */
-  color: white;
+  padding: 18px 0; /* 로고 영역 상하 여백 */
   cursor: pointer; /* 마우스를 올리면 클릭할 수 있는 아이콘으로 변경 */
-  font-weight: bold; /* 글씨를 굵게 */
-  text-align: center; /* 텍스트를 가로 가운데로 정렬 */
-  transition: background-color 0.2s ease; /* 배경색이 0.2초 동안 부드럽게 변하도록 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.2s ease, filter 0.2s ease; /* 호버 시 부드러운 전환 */
+}
+
+/* 로고 영역에 마우스를 올리면 이미지만 살짝 커지며 은은하게 빛나는 효과 */
+.page-header-logo:hover .header-logo-img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45));
 }
 
 /* 로고 오른쪽 경계선: 중앙 좌우 크기가 스크롤바와 일치(8px)하며 상하로 갈수록 얇아지는 형태 */
-.header-logo::after {
+.page-header-logo::after {
   content: ''; /* 가상 요소를 눈에 보이게 켜주는 '스위치' 역할 */
-  position: absolute; /* 가상 요소가 부모(header-logo)를 기준으로 배치 */
+  position: absolute; /* 가상 요소가 부모(page-header-logo)를 기준으로 배치 */
   right: 0; /* 부모의 오른쪽 끝에 정렬 */
   top: 15%; /* 부모의 상단에서 15% 아래부터 시작 */
   height: 70%; /* 부모 높이의 70% 만큼 세로로 차지 */
@@ -42,13 +55,8 @@
   pointer-events: none; /* 클릭/드래그 등 마우스 상호작용을 막음 */
 }
 
-.header-logo:hover {
-  /* header-logo 영역에 마우스를 올리면 배경색이 #6366f1로 변함 */
-  background-color: #6366f1;
-}
-
-.header-right {
-  /* header-right 영역 */
+.page-header-right {
+  /* page-header-right 영역 */
   flex-grow: 1; /* 남은 공간을 끝까지 확장 */
   display: flex; /* 요소를 수평으로 나열합니다. */
   align-items: center; /* 요소를 수직축 방향(세로)을 따라 가운데 정렬합니다. */
@@ -67,7 +75,7 @@
   overflow-x: auto; /* 탭이 많아지면 가로 스크롤 */
 }
 
-.header-tab {
+.page-header-tab {
   /* 개별 탭 아이템 */
   position: relative;
   display: inline-flex;
@@ -89,12 +97,12 @@
     color 0.2s ease;
 }
 
-.header-tab:hover {
+.page-header-tab:hover {
   background-color: rgba(255, 255, 255, 0.25);
   color: white;
 }
 
-.header-tab.active {
+.page-header-tab.active {
   /* 현재 활성화된 탭 */
   background-color: white;
   color: #0b2041;
@@ -131,12 +139,12 @@
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.header-tab.active .tab-close-btn:hover {
+.page-header-tab.active .tab-close-btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
   color: #ef4444; /* 닫기 마우스 오버 시 레드 포인트 */
 }
 
-.header-logout-btn {
+.page-header-logout-btn {
   /* 로그아웃 버튼 */
   margin-left: auto; /* 플렉스 컨테이너 안에서 무조건 가장 오른쪽 끝으로 밀착 */
   background-color: #797bda; /* 배경색 */
@@ -149,7 +157,7 @@
   transition: background-color 0.2s ease; /* 배경색이 0.2초 동안 부드럽게 변하도록 설정 */
 }
 
-.header-logout-btn:hover {
+.page-header-logout-btn:hover {
   /* 로그아웃 버튼에 마우스를 올리면 배경색이 #6366f1로 변함 */
   background-color: #6366f1;
 }
