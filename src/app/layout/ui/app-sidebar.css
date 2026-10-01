@@ -2,8 +2,81 @@
   list-style: none; /* 기본적으로 표시되는 리스트 기호를 제거 */
   display: flex; /* 요소를 수평으로 나열합니다. */
   flex-direction: column; /* 요소를 수직으로 쌓습니다. */
-  padding: 2rem 3rem; /* 상하 32px, 좌우 48px */
-  gap: 1rem; /* 메뉴 간격 16px */
+  padding: 2rem 2.5rem; /* 여백 조정 */
+  gap: 1.25rem; /* 메뉴 간격 */
+}
+
+/* 1depth 그룹 컨테이너 */
+.sidebar-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* 1depth 아코디언 토글 버튼 */
+.sidebar-group-btn {
+  background: none;
+  border: none;
+  padding: 0.35rem 0.2rem;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.15s ease-in-out;
+  text-align: left;
+}
+
+.sidebar-group-btn:hover {
+  color: #2563eb;
+}
+
+.sidebar-group-btn.active {
+  color: #2563eb;
+}
+
+/* 화살표 아이콘 */
+.sidebar-group-arrow {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  transition: transform 0.2s ease, color 0.15s ease;
+  user-select: none;
+}
+
+.sidebar-group-btn:hover .sidebar-group-arrow {
+  color: #2563eb;
+}
+
+.sidebar-group-btn.open .sidebar-group-arrow {
+  color: #2563eb;
+}
+
+/* 2depth 서브메뉴 리스트 (들여쓰기 및 경계선) */
+.sidebar-sub-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-left: 0.9rem;
+  margin: 0;
+  border-left: 2px solid rgba(0, 0, 0, 0.08);
+  animation: sidebar-slide-down 0.2s ease-out;
+}
+
+@keyframes sidebar-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .sidebar-nav-link { /* 사이드바 네비게이션 링크 */
@@ -12,6 +85,9 @@
   text-decoration: none; /* 밑줄 없음 */
   cursor: pointer; /* 마우스를 올리면 클릭할 수 있는 아이콘으로 변경 */
   transition: color 0.15s ease-in-out; /* 색상이 0.15초 동안 부드럽게 변하도록 설정 */
+  font-size: 0.9rem;
+  display: block;
+  padding: 0.15rem 0;
 }
 
 .sidebar-nav-link:hover { /* 사이드바 네비게이션 링크에 마우스를 올리면 */
@@ -51,4 +127,3 @@
 .app-sidebar::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.55);
 }
-

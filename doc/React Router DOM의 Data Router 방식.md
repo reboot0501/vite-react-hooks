@@ -762,20 +762,48 @@ Main
 
 ```text
 src/
-├── main.tsx
-├── router/
-│   └── index.tsx
-├── layouts/
-│   └── MainLayout.tsx
-├── pages/
-│   ├── Dashboard.tsx
-│   ├── Users.tsx
-│   ├── UserDetail.tsx
-│   ├── Settings.tsx
-│   └── Login.tsx
-└── components/
-    ├── Header.tsx
-    └── Sidebar.tsx
+├── main.tsx                         # 앱 진입점 (DOM 렌더링)
+│
+├── app/                             # 앱 레벨 설정, 라우팅, 공통 레이아웃
+│   ├── App.tsx                      # RouterProvider 공급 최상위 컴포넌트
+│   ├── routes/                      # 라우팅 정의
+│   │   ├── app-router.tsx           # createBrowserRouter() 생성
+│   │   └── routes.tsx               # RouteObject[] 배열 및 loader(appLayoutLoader) 정의
+│   ├── layout/                      # 베이스 레이아웃 (LNB, Header, Main, Outlet)
+│   │   ├── index.ts
+│   │   └── ui/
+│   │       ├── app-layout.container.tsx # 공통 레이아웃 컨테이너 (useLoaderData, 로딩바)
+│   │       ├── app-layout.container.css
+│   │       ├── app-header.tsx           # 상단 헤더 & 열린 탭(Tabs) 바
+│   │       ├── app-header.css
+│   │       ├── app-sidebar.tsx          # 사이드바 LNB 메뉴
+│   │       ├── app-sidebar.css
+│   │       ├── app-main.tsx             # <Outlet /> 렌더링 메인 컨테이너
+│   │       └── app-main.css
+│   └── styles/
+│       └── global.css               # 전역 스타일
+│
+├── entities/                        # 비즈니스 도메인 모델 & API
+│   ├── index.ts                     # 엔티티 통합 export
+│   ├── model/
+│   │   └── menu.entity.ts           # Menu 타입, DEFAULT_MENUS, MENU_TITLES
+│   └── api/
+│       └── menu.api.ts              # fetchMenus() 비동기 조회 함수
+│
+├── pages/                           # 각 라우트별 업무 화면 컴포넌트
+│   └── use-state/
+│       ├── timer.tsx                # /use-state/timer 화면
+│       ├── set-state-callback.tsx   # /use-state/set-state-callback 화면
+│       └── initial-value-callback.tsx # /use-state/initial-value-callback 화면
+│
+└── shared/                          # 공통 모듈 (HTTP 클라이언트, 정적 에셋)
+    ├── api/                         # Axios 인스턴스 & HTTP 메서드 래퍼
+    │   ├── axios-instance.ts
+    │   ├── auth-interceptor.ts
+    │   ├── http-client.ts           # get(), post(), del() 등
+    │   └── index.ts
+    └── assets/                      # 로고 및 정적 이미지
+        └── index.ts
 ```
 
 ---

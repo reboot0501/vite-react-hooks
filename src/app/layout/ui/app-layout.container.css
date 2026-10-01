@@ -20,3 +20,31 @@
   flex: 1; /* 남은 공간을 끝까지 확장 */
   min-width: 0; /* 요소의 최소 크기를 0으로 설정 */
 }
+
+/* 상단 글로벌 로딩 진행 표시줄 (Navigation Progress Bar) */
+.global-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #646cff, #747bff, #9089fc);
+  z-index: 9999;
+  animation: global-loading-anim 1.2s infinite ease-in-out;
+  transform-origin: 0% 50%;
+}
+
+@keyframes global-loading-anim {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scaleX(0.7);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}

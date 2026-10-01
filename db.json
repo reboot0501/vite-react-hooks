@@ -1,0 +1,48 @@
+{
+  "menus": [
+    {
+      "id": "1",
+      "name": "useState",
+      "path": "/use-state",
+      "children": [
+        {
+          "id": "1-1",
+          "name": "useState-timer",
+          "path": "/use-state/timer"
+        },
+        {
+          "id": "1-2",
+          "name": "useState-set-state-callback",
+          "path": "/use-state/set-state-callback"
+        },
+        {
+          "id": "1-3",
+          "name": "useState-initial-value-callback",
+          "path": "/use-state/initial-value-callback"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "useEffect",
+      "path": "/use-effect",
+      "children": [
+        {
+          "id": "2-1",
+          "name": "use-cases-use-effect",
+          "path": "/use-effect/use-cases-use-effect"
+        },
+        {
+          "id": "2-2",
+          "name": "toggle-timer",
+          "path": "/use-effect/toggle-timer"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "메뉴5",
+      "path": "/menu5"
+    }
+  ]
+}

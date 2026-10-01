@@ -87,9 +87,9 @@
   min-width: 120px; /* 탭 최소 너비 */
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 90px;
-  padding-right: 110px;
-  font-size: 0.95rem;
+  padding-left: 20px;
+  padding-right: 40px;
+  font-size: 1rem;
   cursor: pointer;
   user-select: none;
   transition:
