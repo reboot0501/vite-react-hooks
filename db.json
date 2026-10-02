@@ -41,8 +41,71 @@
     },
     {
       "id": "3",
-      "name": "메뉴5",
-      "path": "/menu5"
+      "name": "useRef",
+      "path": "/use-ref",
+      "children": [
+        {
+          "id": "3-1",
+          "name": "useRef 를 통한 변수관리",
+          "path": "/use-ref/variable-mng-use-ref"
+        },
+        {
+          "id": "3-2",
+          "name": "useRef 통한 랜더링 카운팅 저장",
+          "path": "/use-ref/render-count-use-ref"
+        },
+        {
+          "id": "3-3",
+          "name": "useRef 를 통한 DOM 접근",
+          "path": "/use-ref/dom-access-use-ref"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "useContext",
+      "path": "/use-context",
+      "children": [
+        {
+          "id": "4-1",
+          "name": "useContext 를 통한 값 전달",
+          "path": "/use-context/page-use-context"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "useMemo",
+      "path": "/use-memo",
+      "children": [
+        {
+          "id": "5-1",
+          "name": "primitive 타입의 결과 값 memoization 을 통한 성능향상",
+          "path": "/use-memo/heavy-calculator-use-memo"
+        },
+        {
+          "id": "5-2",
+          "name": "객체 타입의 결과 값 memoization 을 통한 성능향상",
+          "path": "/use-memo/object-type-use-memo"
+        }
+      ]    
+    },
+    {
+      "id": "6",
+      "name": "useCallback",
+      "path": "/use-callback",
+      "children": [
+        {
+          "id": "6-1",
+          "name": "useCallback 을 통한 기본 예제",
+          "path": "/use-callback/basic-example-use-callback"
+        },
+        {
+          "id": "6-2",
+          "name": "useCallback 을 통한 성능향상",
+          "path": "/use-callback/performance-improvement-use-callback"
+        }
+      ]
     }
   ]
 }

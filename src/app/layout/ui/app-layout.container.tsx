@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useLoaderData, useNavigation } from 'react-router-dom';
-import { MENU_TITLES as DEFAULT_MENU_TITLES, flattenMenuTitles } from '@/entities/model/menu.entity';
+import { flattenMenuTitles } from '@/entities/model/menu.entity';
 import type { AppLayoutLoaderData } from '@/app/routes/routes';
 import Main from './app-main';
 import Header, { type TabItem } from './app-header';
@@ -15,6 +15,8 @@ const AppLayout = () => {
 
   // React Router loader가 사전 패칭한 메뉴 데이터 수신
   const loaderData = useLoaderData() as AppLayoutLoaderData | undefined;
+  const isError = loaderData?.isError ?? false;
+  // loaderData?.menus 가 undefined이면 빈 배열로 초기화 (?? : 연산자 활용)
   const menus = loaderData?.menus ?? [];
 
   // 라우트 전환 및 loader 비동기 처리 중 로딩 상태 감지 (실무 필수 UX)
@@ -23,9 +25,9 @@ const AppLayout = () => {
 
   // loader로 전달받은 메뉴 목록(계층형 포함)을 기반으로 경로별 제목 매핑 객체(O(1) 룩업) 동적 생성
   const menuTitles = useMemo<Record<string, string>>(() => {
-    if (!menus.length) return DEFAULT_MENU_TITLES;
+    if (isError || !menus.length) return {};
     return flattenMenuTitles(menus);
-  }, [menus]);
+  }, [menus, isError]);
 
   /** 열려있는 Tab 리스트 상태 관리 (Lazy Initial State, 지연 초기화)
    * 1. useState에 함수 () => { ... }를 넘기면, 컴포넌트가 처음 화면 Rendering 될 때만 이 함수가 실행
@@ -87,8 +89,8 @@ const AppLayout = () => {
     }
   };
 
-  // menuTitles[location.pathname] 의 값이 null이거나 undefined이면 ➡️ 오른쪽 인 '메인 콘텐츠' 표시
-  const currentTitle = menuTitles[location.pathname] ?? '메인 콘텐츠';
+  // menuTitles[location.pathname] 의 값이 null이거나 undefined이면 Fallback 표시
+  const currentTitle = isError ? '오류 안내' : (menuTitles[location.pathname] ?? '메인 콘텐츠');
 
   return (
     <div className="page-wrapper">
@@ -105,10 +107,10 @@ const AppLayout = () => {
         onCloseTab={handleCloseTab}
       />
       <div className="page-body">
-        {/* 사이드바 영역에 loader로 패칭한 menus 데이터를 전달 */}
-        <Sidebar menus={menus} />
-        {/* 현재 선택된 메뉴에 대한 title 값을 자식 컴포넌트에게 전달 */}
-        <Main title={currentTitle} />
+        {/* 사이드바 영역에 loader로 패칭한 menus 데이터 및 에러 상태 전달 */}
+        <Sidebar menus={menus} isError={isError} />
+        {/* 현재 선택된 메뉴에 대한 title 값 및 에러 상태 전달 */}
+        <Main title={currentTitle} isError={isError} />
       </div>
     </div>
   );

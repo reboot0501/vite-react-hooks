@@ -23,6 +23,7 @@ export const routes: RouteObject[] = [
     path: "/",
     element: <AppLayout />,       // 헤더, 사이드바를 감싸는 공통 레이아웃
     loader: layoutLoader,         // 🌟 [부모 loader]: 사이드바 전체 메뉴, 사용자 세션 사전 준비!
+    HydrateFallback: LoadingUI,   // ⏳ [하이드레이션 대기 UI]: loader 실행 중 첫 화면 깜빡임을 방지하는 스켈레톤/스피너
     children: [
       {
         path: "menu1",
@@ -36,6 +37,24 @@ export const routes: RouteObject[] = [
   },
 ];
 ```
+
+---
+
+#### 💡 실무 필수 팁: `loader`와 바늘과 실처럼 함께 쓰는 `HydrateFallback`
+
+최상위 라우트에 비동기 `loader`를 지정하면, 앱이 처음 브라우저에 마운트(Hydration)될 때 loader가 완료될 때까지 잠시 대기하게 됩니다. 이때 `HydrateFallback`을 지정하지 않으면 브라우저 콘솔에 다음과 같은 경고가 발생합니다:
+
+```text
+No `HydrateFallback` element provided to render during initial hydration
+```
+
+##### 1. `HydrateFallback`의 역할
+- 비동기 `loader`가 실행되는 동안 화면이 하얗게 멈추는(White-out) 현상을 방지하고, **초기 로딩 스플래시 화면이나 레이아웃 스켈레톤(Skeleton UI)**을 렌더링합니다.
+
+##### 2. 실무에서는 왜 `fallbackElement`보다 `HydrateFallback`을 쓸까?
+- **과거 방식 (`<RouterProvider fallbackElement={...} />`)**: 라우터 컴포넌트 레벨의 전역 설정으로, 라우트 정의와 로딩 UI가 분리되어 응집도가 떨어졌습니다.
+- **최신 표준 (`RouteObject`의 `HydrateFallback`)**: React Router v6.24+ 및 v7의 공식 표준이며, 라우트 객체 내부에 `loader`, `element`, `errorElement`, `HydrateFallback`을 **한곳에 선언적으로 응집**시켜 라우트 계층별로 정교한 로딩 UI를 제공할 수 있어 실무에서 가장 권장됩니다.
+
 
 #### 📁 `layoutLoader`의 실제 구현은 어느 Layer에 배치하는가? (FSD 아키텍처 기준)
 

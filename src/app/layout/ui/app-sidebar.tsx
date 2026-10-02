@@ -1,14 +1,39 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { DEFAULT_MENUS, type Menu } from "@/entities/model/menu.entity";
+import { type Menu } from "@/entities/model/menu.entity";
 import "./app-sidebar.css";
 
 interface SidebarProps {
   menus?: Menu[];
+  isError?: boolean;
 }
 
-const Sidebar = ({ menus = DEFAULT_MENUS }: SidebarProps) => {
+const Sidebar = ({ menus = [], isError = false }: SidebarProps) => {
   const location = useLocation();
+
+  if (isError) {
+    return (
+      <aside className="app-sidebar" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px 16px', color: '#dc2626', textAlign: 'center' }}>
+        <div style={{ fontSize: '32px', marginBottom: '8px' }}>⚠️</div>
+        <p style={{ fontWeight: 600, fontSize: '14px', margin: '0 0 4px 0' }}>메뉴 로딩 실패</p>
+        <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 16px 0' }}>서버와 연결할 수 없습니다.</p>
+        <button
+          onClick={() => window.location.reload()}
+          style={{
+            padding: '6px 12px',
+            fontSize: '12px',
+            backgroundColor: '#fff',
+            color: '#dc2626',
+            border: '1px solid #fca5a5',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          다시 시도
+        </button>
+      </aside>
+    );
+  }
 
   // 현재 열려있는 1depth 메뉴 식별자 (단일 아코디언: 한 번에 단 하나의 1depth만 열림)
   const [openMenuId, setOpenMenuId] = useState<string | null>(() => {

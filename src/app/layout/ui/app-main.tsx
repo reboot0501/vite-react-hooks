@@ -8,6 +8,8 @@ interface MainProps {
    *   Fallback(?? '메인 콘텐츠') 처리를 완료한 확정된 제목 문자열을 전달받음
    */
   title: string;
+  /** 서버 오류 등 예외 발생 시 true */
+  isError?: boolean;
 }
 
 /**
@@ -15,7 +17,7 @@ interface MainProps {
  * - 부모로부터 전달받은 title을 상단 헤더에 표출
  * - React Router의 <Outlet />을 통해 현재 URL에 해당하는 실제 자식 페이지를 렌더링
  */
-const Main = ({ title }: MainProps) => {
+const Main = ({ title, isError = false }: MainProps) => {
   return (
     <main className="app-main">
       <section className="main-header">
@@ -23,9 +25,32 @@ const Main = ({ title }: MainProps) => {
         <h3>{title}</h3>
       </section>
       <section className="main-content">
-        {/* Outlet 위치에 React Router의 현재 URL에 매칭된 하위 라우트 컴포넌트
-            (routes.tsx의 children element)를 표출 */}
-        <Outlet />
+        {isError ? (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '320px',
+              color: '#4b5563',
+              textAlign: 'center',
+              backgroundColor: '#f9fafb',
+              borderRadius: '8px',
+              border: '1px dashed #e5e7eb',
+              margin: '20px',
+            }}
+          >
+            <div style={{ fontSize: '40px', marginBottom: '12px' }}>🚫</div>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#1f2937' }}>화면 로딩 실패</h4>
+            <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
+              서버와의 통신에 실패하여 화면 콘텐츠를 불러올 수 없습니다.
+            </p>
+          </div>
+        ) : (
+          /* Outlet 위치에 React Router의 현재 URL에 매칭된 하위 라우트 컴포넌트를 표출 */
+          <Outlet />
+        )}
       </section>
     </main>
   );
