@@ -106,6 +106,23 @@
           "path": "/use-callback/performance-improvement-use-callback"
         }
       ]
+    },
+    {
+      "id": "7",
+      "name": "useReducer",
+      "path": "/use-reducer",
+      "children": [
+        {
+          "id": "7-1",
+          "name": "useReducer 를 통한 간단한 상태관리",
+          "path": "/use-reducer/simple-use-reducer"
+        },
+        {
+          "id": "7-2",
+          "name": "useReducer 를 통한 복잡한 상태관리 (객체)",
+          "path": "/use-reducer/complex-use-reducer"
+        }
+      ]
     }
   ]
 }
