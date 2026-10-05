@@ -123,6 +123,59 @@
           "path": "/use-reducer/complex-use-reducer"
         }
       ]
+    },
+    {
+      "id": "8",
+      "name": "React.memo",
+      "path": "/react-memo",
+      "children": [
+        {
+          "id": "8-1",
+          "name": "React.memo를 통한 컴포넌트 간단 최적화",
+          "path": "/react-memo/simple-react-memo"
+        },{ 
+          "id": "8-2",
+          "name": "React.memo + useMemo 를 통한 컴포넌트 최적화",
+          "path": "/react-memo/react-memo-with-use-memo"
+        },{
+          "id": "8-3",
+          "name": "React.memo + useCallback 를 통한 컴포넌트 최적화",
+          "path": "/react-memo/react-memo-with-use-callback"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Custom Hooks",
+      "path": "/custom-hooks",
+      "children": [
+        {
+          "id": "9-1",
+          "name": "간단한 Custom Hook",
+          "path": "/custom-hooks/simple-custom-hook"
+        },
+        {
+          "id": "9-2",
+          "name": "유용한 Custom Hook",
+          "path": "/custom-hooks/useful-custom-hook"
+        },
+        {
+          "id": "9-3",
+          "name": "응용 Custom Hook",
+          "path": "/custom-hooks/advanced-example-custom-hook"
+        }
+      ]
+    },{
+      "id": "10",
+      "name": "useId",
+      "path": "/use-id",
+      "children": [
+        {
+          "id": "10-1",
+          "name": "useId hook 기본 예제",
+          "path": "/use-id/example-use-id"
+        }
+      ]
     }
   ]
 }
