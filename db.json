@@ -176,6 +176,33 @@
           "path": "/use-id/example-use-id"
         }
       ]
+    }, {
+      "id": "11",
+      "name": "useLayoutEffect",
+      "path": "/use-layout-effect",
+      "children": [
+        {
+          "id": "10-1",
+          "name": "useLayoutEffect 와 useEffect 비교",
+          "path": "/use-layout-effect/compare-use-effect"
+        },
+        {
+          "id": "10-2",
+          "name": "useLayoutEffect 예제",
+          "path": "/use-layout-effect/example-use-layout-effect"
+        }
+      ]    
+    }, {
+      "id": "12",
+      "name": "debounce",
+      "path": "/debounce",
+      "children": [
+        {
+          "id": "12-1",
+          "name": "debounce custom hook 을 사용한 서버 호출 최적화",
+          "path": "/debounce/example-debounce"
+        }
+      ]
     }
   ]
 }
