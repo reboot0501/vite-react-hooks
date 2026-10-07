@@ -1,0 +1,57 @@
+/* src/pages/throttling/throttling.css */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lotto-button {
+  margin-top: 10px;
+  font-size: 25px;
+  padding: 20px 40px;
+}
+
+.lotto-numbers {
+  display: flex;
+  gap: 15px;
+}
+
+.lotto-number {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: brown;
+  color: white;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  font-size: 25px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.lotto-button:hover {
+  background-color: #e5e7eb;
+  border-color: #6b7280;
+}
+
+.lotto-button:active {
+  transform: scale(0.98);
+}
+

@@ -1,4 +1,4 @@
-// src/pages/custom-hooks/hooks/use-fetch.tsx
+// src/pages/custom-hooks/hooks/use-fetch.ts
 
 import { useEffect, useState } from "react";
 

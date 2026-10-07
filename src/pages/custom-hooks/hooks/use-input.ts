@@ -1,4 +1,4 @@
-// src/pages/custom-hooks/hooks/use-input.tsx
+// src/pages/custom-hooks/hooks/use-input.ts
 import { useState } from "react";
 
 const useInput = (initialValue: string, submitAction: (value: string) => void) => {

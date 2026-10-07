@@ -182,12 +182,12 @@
       "path": "/use-layout-effect",
       "children": [
         {
-          "id": "10-1",
+          "id": "11-1",
           "name": "useLayoutEffect 와 useEffect 비교",
           "path": "/use-layout-effect/compare-use-effect"
         },
         {
-          "id": "10-2",
+          "id": "11-2",
           "name": "useLayoutEffect 예제",
           "path": "/use-layout-effect/example-use-layout-effect"
         }
@@ -201,6 +201,21 @@
           "id": "12-1",
           "name": "debounce custom hook 을 사용한 서버 호출 최적화",
           "path": "/debounce/example-debounce"
+        }
+      ]
+    }, {
+      "id": "13",
+      "name": "throttling",
+      "path": "/throttling",
+      "children": [
+        {
+          "id": "13-1",
+          "name": "throttle 사용하지 않은 예시",
+          "path": "/throttling/none-throttling"
+        } ,{
+          "id": "13-2",
+          "name": "throttle 적용한 예시",
+          "path": "/throttling/example-use-throttling"
         }
       ]
     }

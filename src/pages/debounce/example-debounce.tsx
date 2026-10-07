@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import "./example-debounce.css"
-import useDebounce from "./hook/use-debounce";
+import useDebounce from "./hooks/use-debounce";
 
 interface User {
   name: string;
