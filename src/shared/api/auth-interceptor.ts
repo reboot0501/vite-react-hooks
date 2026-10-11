@@ -1,5 +1,6 @@
 // src/shared/api/auth-interceptor.ts
-import type { AxiosInstance } from "axios";
+import type { AxiosInstance } from 'axios';
+
 /**
  * [수정 이유] 순환 참조(Circular Dependency) 문제 해결
  *
@@ -22,15 +23,28 @@ import type { AxiosInstance } from "axios";
  *     초기화 순서를 명확하게 보장함.
  */
 export function setupAuthInterceptor(instance: AxiosInstance): void {
-	// 요청 인터셉터 설정
+  // 요청 인터셉터 설정
   instance.interceptors.request.use((config) => {
-	  // 로컬 스토리지에서 accessToken을 가져와서 요청 헤더에 추가
-    const token = localStorage.getItem("accessToken");
-		// 
-    if (token) { // accessToken이 있으면 요청 헤더에 Authorization 추가
+    // 로컬 스토리지에서 accessToken을 가져와서 요청 헤더에 추가
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      // accessToken이 있으면 요청 헤더에 Authorization 추가
       config.headers.Authorization = `Bearer ${token}`;
     }
-		// 요청 설정 반환
+    // 요청 설정 반환
     return config;
-  });
+  },
+  (error) => Promise.reject(error), // 요청 설정 실패 시 안전하게 reject 전달
+  );
+
+  /**
+   * [응답 에러 인터셉터를 별도로 두지 않는 이유 (현재 구조)]
+   *
+   * 이 프로젝트의 API 호출은 대부분 TanStack Query(useQuery, useMutation)를 통해 이루어집니다.
+   * src/app/providers/query-provider.tsx 의 QueryCache와 MutationCache가
+   * 모든 쿼리/뮤테이션의 에러를 이미 감지하여 handleApiError를 호출하고 있습니다.
+   * 따라서 auth-interceptor.ts에 별도 응답 에러 로직이 없어도
+   * 401 처리(로그인 이동 팝업) 및 일반 에러 팝업이 완벽히 작동합니다.
+   */
 }

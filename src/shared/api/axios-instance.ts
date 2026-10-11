@@ -33,4 +33,7 @@ export const axiosInstance = axios.create({
  *   - 초기화 순서: 
  *     axiosInstance 생성 → setupAuthInterceptor 호출 → 인터셉터 등록 완료
  */
+// 인증 인터셉터 등록 — localStorage의 accessToken을 Authorization 헤더로 자동 주입
 setupAuthInterceptor(axiosInstance);
+
+// 참고: API 공통 에러(401, 전역 팝업 등)는 TanStack Query 전역 캐시(src/app/providers/query-provider.tsx)에서 일원화하여 처리합니다.
