@@ -88,7 +88,7 @@
           "name": "객체 타입의 결과 값 memoization 을 통한 성능향상",
           "path": "/use-memo/object-type-use-memo"
         }
-      ]    
+      ]
     },
     {
       "id": "6",
@@ -133,11 +133,13 @@
           "id": "8-1",
           "name": "React.memo를 통한 컴포넌트 간단 최적화",
           "path": "/react-memo/simple-react-memo"
-        },{ 
+        },
+        {
           "id": "8-2",
           "name": "React.memo + useMemo 를 통한 컴포넌트 최적화",
           "path": "/react-memo/react-memo-with-use-memo"
-        },{
+        },
+        {
           "id": "8-3",
           "name": "React.memo + useCallback 를 통한 컴포넌트 최적화",
           "path": "/react-memo/react-memo-with-use-callback"
@@ -165,7 +167,8 @@
           "path": "/custom-hooks/advanced-example-custom-hook"
         }
       ]
-    },{
+    },
+    {
       "id": "10",
       "name": "useId",
       "path": "/use-id",
@@ -176,7 +179,8 @@
           "path": "/use-id/example-use-id"
         }
       ]
-    }, {
+    },
+    {
       "id": "11",
       "name": "useLayoutEffect",
       "path": "/use-layout-effect",
@@ -191,8 +195,9 @@
           "name": "useLayoutEffect 예제",
           "path": "/use-layout-effect/example-use-layout-effect"
         }
-      ]    
-    }, {
+      ]
+    },
+    {
       "id": "12",
       "name": "debounce",
       "path": "/debounce",
@@ -203,7 +208,8 @@
           "path": "/debounce/example-debounce"
         }
       ]
-    }, {
+    },
+    {
       "id": "13",
       "name": "throttling",
       "path": "/throttling",
@@ -212,12 +218,44 @@
           "id": "13-1",
           "name": "throttle 사용하지 않은 예시",
           "path": "/throttling/none-throttling"
-        } ,{
+        },
+        {
           "id": "13-2",
           "name": "throttle 적용한 예시",
           "path": "/throttling/example-use-throttling"
         }
       ]
+    },
+    {
+      "id": "14",
+      "name": "tanstack-query-jotai",
+      "path": "/tanstack-query-jotai",
+      "children": [
+        {
+          "id": "14-1",
+          "name": "tanstack-query-jotai 기본 예제",
+          "path": "/tanstack-query-jotai/example-tanstack-query-jotai"
+        }
+      ]
     }
-  ]
+  ],
+  "todos": [
+    {
+      "id": "1",
+      "text": "FSD 아키텍처 학습하기"
+    },
+    {
+      "id": "2",
+      "text": "TanStack Query 연동하기"
+    },
+    {
+      "text": "jotai 학습하기",
+      "id": "W9MRKVPUxqw"
+    },
+    {
+      "text": "zustand  학습하기(수정)",
+      "id": "7I9vk12VhfQ"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

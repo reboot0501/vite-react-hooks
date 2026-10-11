@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useLoaderData, useNavigation } from 'react-router-dom';
-import { flattenMenuTitles } from '@/entities/model/menu.entity';
+import { flattenMenuTitles } from '@/entities/menu';
 import type { AppLayoutLoaderData } from '@/app/routes/routes';
 import Main from './app-main';
 import Header, { type TabItem } from './app-header';

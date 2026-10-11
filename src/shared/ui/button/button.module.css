@@ -1,0 +1,35 @@
+.button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+.primary:hover {
+  background-color: #1d4ed8;
+}
+
+.outlined {
+  background-color: transparent;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+.outlined:hover {
+  background-color: #eff6ff;
+}
+
+.danger {
+  background-color: transparent;
+  border-color: #dc2626;
+  color: #dc2626;
+}
+.danger:hover {
+  background-color: #fef2f2;
+}

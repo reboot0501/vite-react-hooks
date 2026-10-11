@@ -1,0 +1,8 @@
+/* src/shared/ui/divider/divider.module.css */
+.divider {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  margin: 0;
+  margin-bottom: 24px;
+  width: 100%;
+}

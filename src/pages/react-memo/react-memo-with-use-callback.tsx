@@ -17,7 +17,7 @@ const ReactMemoWithUseMemo = () => {
   
   return (
     <div style={{ border: "1px solid red", padding: "10px" }}>
-      <h3>👪 부모 </h3>
+      <h2>👪 부모 </h2>
       <br />
       <p>age: {parentAge}</p>
       <br />

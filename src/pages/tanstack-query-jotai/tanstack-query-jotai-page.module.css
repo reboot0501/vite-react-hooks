@@ -1,0 +1,12 @@
+.page {
+  padding: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}

@@ -1,9 +1,12 @@
+// src/app/routes/routes.tsx
+
 import type { RouteObject } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import type { ComponentType } from 'react';
 import AppLayout from '../layout/ui/app-layout.container';
-import { fetchMenus } from '@/entities/api/menu.api';
-import { DEFAULT_MENUS, type Menu } from '@/entities/model/menu.entity';
+import { fetchMenus, type Menu } from '@/entities/menu';
+import { DEFAULT_MENUS } from './default-menus';
+import styles from './routes.module.css';
 
 export interface AppLayoutLoaderData {
   menus: Menu[];
@@ -94,7 +97,7 @@ function createRoutesFromMenus(menus: Menu[]): RouteObject[] {
               lazy: lazyLoader,
               // 파일이 아직 없는 메뉴는 안전한 Fallback UI 렌더링
               element: !lazyLoader ? (
-                <div style={{ padding: '24px' }}>{child.name} 화면 준비 중입니다.</div>
+                <div className={styles.fallbackMessage}>{child.name} 화면 준비 중입니다.</div>
               ) : undefined,
             };
           }),
@@ -110,7 +113,7 @@ function createRoutesFromMenus(menus: Menu[]): RouteObject[] {
       path: relativePath,
       lazy: lazyLoader,
       element: !lazyLoader ? (
-        <div style={{ padding: '24px' }}>{menu.name} 화면 준비 중입니다.</div>
+        <div className={styles.fallbackMessage}>{menu.name} 화면 준비 중입니다.</div>
       ) : undefined,
     };
   });
@@ -128,53 +131,19 @@ function createRoutesFromMenus(menus: Menu[]): RouteObject[] {
  */
 const RootErrorBoundary = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        padding: '24px',
-        backgroundColor: '#f8fafc',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '460px',
-          width: '100%',
-          padding: '36px 28px',
-          backgroundColor: '#ffffff',
-          borderRadius: '12px',
-          boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
-          textAlign: 'center',
-          border: '1px solid #fee2e2',
-        }}
-      >
-        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚨</div>
-        <h2 style={{ color: '#dc2626', fontSize: '22px', fontWeight: 700, margin: '0 0 12px 0' }}>
+    <div className={styles.errorContainer}>
+      <div className={styles.errorCard}>
+        <div className={styles.errorIcon}>🚨</div>
+        <h2 className={styles.errorTitle}>
           서버 오류 입니다.
         </h2>
-        <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.6, margin: '0 0 24px 0' }}>
+        <p className={styles.errorDescription}>
           백엔드 서버(<code>http://localhost:4000</code>)와 연결할 수 없습니다.<br />
           Mock 서버가 켜져 있는지 확인해 주세요.
         </p>
         <button
           onClick={() => window.location.reload()}
-          style={{
-            padding: '10px 24px',
-            backgroundColor: '#2563eb',
-            color: '#ffffff',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 600,
-            transition: 'background-color 0.2s',
-          }}
-          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#1d4ed8')}
-          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#2563eb')}
+          className={styles.retryButton}
         >
           다시 시도
         </button>
@@ -190,7 +159,7 @@ export const routes: RouteObject[] = [
     element: <AppLayout />, // 공통 헤더, 사이드바, 푸터를 렌더링하는 Base Layout
     loader: appLayoutLoader, // 화면 렌더링 전 메뉴 데이터 사전 패칭
     HydrateFallback: () => (
-      <div style={{ padding: '24px', textAlign: 'center', color: '#666' }}>
+      <div className={styles.hydrateFallback}>
         애플리케이션을 초기화하는 중입니다...
       </div>
     ),

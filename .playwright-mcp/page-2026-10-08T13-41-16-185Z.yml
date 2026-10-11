@@ -1,0 +1,8 @@
+- generic [ref=f7e4]:
+  - generic [ref=f7e5]: 🚨
+  - heading "서버 오류 입니다." [level=2] [ref=f7e6]
+  - paragraph [ref=f7e7]:
+    - text: 백엔드 서버(
+    - code [ref=f7e8]: http://localhost:4000
+    - text: )와 연결할 수 없습니다.Mock 서버가 켜져 있는지 확인해 주세요.
+  - button "다시 시도" [ref=f7e9] [cursor=pointer]

@@ -12,3 +12,35 @@
 .main-content { /* 메인 콘텐츠 영역 */
   padding: 1.5rem; /* 상하 24px, 좌우 24px */
 }
+
+/* 메인 화면 로딩 실패 에러 안내 영역 */
+.main-error-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 320px;
+  color: #4b5563;
+  text-align: center;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px dashed #e5e7eb;
+  margin: 20px;
+}
+
+.main-error-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.main-error-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.main-error-message {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}

@@ -26,24 +26,10 @@ const Main = ({ title, isError = false }: MainProps) => {
       </section>
       <section className="main-content">
         {isError ? (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '320px',
-              color: '#4b5563',
-              textAlign: 'center',
-              backgroundColor: '#f9fafb',
-              borderRadius: '8px',
-              border: '1px dashed #e5e7eb',
-              margin: '20px',
-            }}
-          >
-            <div style={{ fontSize: '40px', marginBottom: '12px' }}>🚫</div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#1f2937' }}>화면 로딩 실패</h4>
-            <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
+          <div className="main-error-fallback">
+            <div className="main-error-icon">🚫</div>
+            <h4 className="main-error-title">화면 로딩 실패</h4>
+            <p className="main-error-message">
               서버와의 통신에 실패하여 화면 콘텐츠를 불러올 수 없습니다.
             </p>
           </div>

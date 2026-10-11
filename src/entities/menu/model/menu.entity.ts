@@ -1,8 +1,8 @@
-import db from '../../../db.json';
+// src/entities/menu/model/menu.entity.ts
 
 /**
  * 메뉴(Menu) 엔티티 인터페이스
- * - LNB 사이드바 메뉴, 상단 탭, 헤더 타이틀, 라우팅 처리에 사용되는 핵심 메뉴 데이터 모델
+ * - LNB 사이드바 메뉴, 상단 탭, 헤더 타이틀, 라우팅 처리에 사용되는 핵심 메뉴 도메인 모델
  */
 export interface Menu {
   /** 메뉴 고유 식별자 (선택 사항) */
@@ -27,13 +27,7 @@ export interface Menu {
 export type MenuItem = Menu;
 
 /**
- * 기본 메뉴 목록 데이터
- * - db.json 의 menus 데이터를 기반으로 단일 진실 공급원(Single Source of Truth) 생성
- */
-export const DEFAULT_MENUS: Menu[] = db.menus;
-
-/**
- * 계층형 메뉴 배열을 재귀 순회하여 경로(path) -> 메뉴명(name) 맵을 평탄화 생성하는 함수
+ * 계층형 메뉴 배열을 재귀 순회하여 경로(path) -> 메뉴명(name) 맵을 평탄화 생성하는 순수 함수
  */
 export const flattenMenuTitles = (menus: Menu[]): Record<string, string> => {
   const result: Record<string, string> = {};
@@ -48,9 +42,3 @@ export const flattenMenuTitles = (menus: Menu[]): Record<string, string> => {
   traverse(menus);
   return result;
 };
-
-/**
- * 경로(path)를 키로 하고 메뉴명(name)을 값으로 매핑한 룩업 테이블
- * - 1depth 및 children 2depth 메뉴의 모든 경로를 포함
- */
-export const MENU_TITLES: Record<string, string> = flattenMenuTitles(DEFAULT_MENUS);
