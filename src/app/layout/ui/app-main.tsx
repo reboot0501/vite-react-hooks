@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+import type { ReactNode } from "react";
+import type { TabItem } from "./app-header";
 import "./app-main.css";
 
 interface MainProps {
@@ -10,14 +11,26 @@ interface MainProps {
   title: string;
   /** 서버 오류 등 예외 발생 시 true */
   isError?: boolean;
+  /** 현재 열려있는 탭 목록 (Keep-Alive 다중 탭 지원) */
+  tabs?: TabItem[];
+  /** 현재 활성화된 탭의 경로 */
+  activePath?: string;
+  /** 각 탭 경로별로 캐싱된 라우트 컴포넌트 엘리먼트 맵 */
+  outletCache?: Record<string, ReactNode>;
 }
 
 /**
  * 메인 콘텐츠 영역을 담당하는 프레젠테이션 컴포넌트(Presentational Component)
  * - 부모로부터 전달받은 title을 상단 헤더에 표출
- * - React Router의 <Outlet />을 통해 현재 URL에 해당하는 실제 자식 페이지를 렌더링
+ * - 각 탭별 화면 인스턴스(outletCache)를 보존하며, 활성 탭만 display: block으로 노출 (Keep-Alive)
  */
-const Main = ({ title, isError = false }: MainProps) => {
+const Main = ({
+  title,
+  isError = false,
+  tabs = [],
+  activePath = "",
+  outletCache = {},
+}: MainProps) => {
   return (
     <main className="app-main">
       <section className="main-header">
@@ -34,8 +47,19 @@ const Main = ({ title, isError = false }: MainProps) => {
             </p>
           </div>
         ) : (
-          /* Outlet 위치에 React Router의 현재 URL에 매칭된 하위 라우트 컴포넌트를 표출 */
-          <Outlet />
+          /* Keep-Alive: 열려있는 탭들을 DOM에 유지하고 활성 탭만 노출 */
+          tabs.map((tab) => (
+            <div
+              key={tab.path}
+              className="tab-content-panel"
+              style={{
+                display: tab.path === activePath ? "block" : "none",
+                height: "100%",
+              }}
+            >
+              {outletCache[tab.path]}
+            </div>
+          ))
         )}
       </section>
     </main>

@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useLocation, useNavigate, useLoaderData, useNavigation } from 'react-router-dom';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useLocation, useNavigate, useLoaderData, useNavigation, useOutlet } from 'react-router-dom';
 import { flattenMenuTitles } from '@/entities/menu';
 import type { AppLayoutLoaderData } from '@/app/routes/routes';
 import Main from './app-main';
@@ -7,11 +8,25 @@ import Header, { type TabItem } from './app-header';
 import Sidebar from './app-sidebar';
 import './app-layout.container.css';
 
+/**
+ * 실무 표준 권장 정책: 최대 동시 오픈 가능 탭 개수 (10개)
+ */
+const MAX_TABS = 10;
+
 const AppLayout = () => {
   // "현재 어디에 있는가?" (위치 정보 조회)
   const location = useLocation();
   // "어디로 갈 것인가?" (화면 이동 기능)
   const navigate = useNavigate();
+
+  // React Router v6/v7 현재 매칭된 자식 라우트의 엘리먼트 추출 (Keep-Alive 용)
+  const currentOutlet = useOutlet();
+
+  // 각 탭 경로(path)별로 렌더링된 컴포넌트 엘리먼트를 캐싱 (Keep-Alive 저장소)
+  const [outletCache, setOutletCache] = useState<Record<string, ReactNode>>({});
+
+  // 직전 활성화 탭 경로 기록 (최대 탭 수 초과 시 롤백용)
+  const prevActivePathRef = useRef<string>(location.pathname);
 
   // React Router loader가 사전 패칭한 메뉴 데이터 수신
   const loaderData = useLoaderData() as AppLayoutLoaderData | undefined;
@@ -41,21 +56,44 @@ const AppLayout = () => {
     return [{ path, title }];
   });
 
-  // LNB 메뉴 클릭이나 URL 변경 시 Tab에 없으면 자동 추가
+  // 1. 현재 라우트 엘리먼트를 캐시(outletCache)에 등록 (Keep-Alive 화면 보존)
   useEffect(() => {
-    const title = menuTitles[location.pathname];
-    if (title) {
-      setTabs((prev) => {
-        // 이전에 열려있는 탭들의 path 와 현재 선택한 path 비교하여 같은 것이 있으면
-        // 탭을 추가하지 않고 이전 탭 객체 전체 반환
-        if (prev.some((tab) => tab.path === location.pathname)) {
-          return prev;
-        }
-        // 새로운 탭 추가하여 탭 객체 전체 반환
-        return [...prev, { path: location.pathname, title }];
+    if (currentOutlet && location.pathname) {
+      setOutletCache((prev) => {
+        if (prev[location.pathname] === currentOutlet) return prev;
+        return {
+          ...prev,
+          [location.pathname]: currentOutlet,
+        };
       });
     }
-  }, [location.pathname, menuTitles]); // 현재 위치 pathname 또는 menuTitles 변경 시 실행
+  }, [location.pathname, currentOutlet]);
+
+  // 2. LNB 메뉴 클릭이나 URL 변경 시 Tab 자동 추가 & 최대 탭 개수(10개) 제약 검증
+  useEffect(() => {
+    const title = menuTitles[location.pathname];
+    if (!title) return;
+
+    setTabs((prev) => {
+      // 이미 열려있는 탭인 경우 그대로 유지
+      if (prev.some((tab) => tab.path === location.pathname)) {
+        prevActivePathRef.current = location.pathname;
+        return prev;
+      }
+
+      // [실무 Best Practice] 최대 탭 개수(10개) 초과 시 오픈 차단 및 사용자 안내
+      if (prev.length >= MAX_TABS) {
+        alert(`탭은 최대 ${MAX_TABS}개까지만 열 수 있습니다.\n기존 탭을 먼저 닫은 후 다시 시도해 주세요.`);
+        // 직전에 보던 탭으로 되돌리기 (롤백)
+        navigate(prevActivePathRef.current, { replace: true });
+        return prev;
+      }
+
+      // 신규 탭 추가 및 활성 경로 기록
+      prevActivePathRef.current = location.pathname;
+      return [...prev, { path: location.pathname, title }];
+    });
+  }, [location.pathname, menuTitles, navigate]);
 
   // Tab 클릭 시 해당 페이지로 라우팅
   const handleSelectTab = (path: string) => {
@@ -70,12 +108,19 @@ const AppLayout = () => {
     if (targetIndex === -1) return; // 탭을 찾지 못하면 중단
 
     // 2. Spread(...) 연산자와 slice()를 활용한 불변성 유지 삭제
-    // - 두 배열 조각을 펼쳐서 대상 탭만 제외된 새로운 배열을 생성 (filter 대비 전체 순회 방지)
     const updatedTabs = [
-      ...tabs.slice(0, targetIndex), // - tabs.slice(0, targetIndex): 삭제 대상 이전의 탭들
-      ...tabs.slice(targetIndex + 1), // - tabs.slice(targetIndex + 1): 삭제 대상 이후의 탭들
+      ...tabs.slice(0, targetIndex),
+      ...tabs.slice(targetIndex + 1),
     ];
     setTabs(updatedTabs);
+
+    // [메모리 해제] 닫힌 탭의 컴포넌트 인스턴스를 캐시에서 완전히 제거하여 GC 유도
+    setOutletCache((prev) => {
+      const next = { ...prev };
+      delete next[pathToRemove];
+      return next;
+    });
+
     // 3. 삭제한 탭이 현재 활성화되어 보고 있던 페이지일 경우 후속 라우팅 처리
     if (location.pathname === pathToRemove) {
       if (updatedTabs.length > 0) {
@@ -109,8 +154,14 @@ const AppLayout = () => {
       <div className="page-body">
         {/* 사이드바 영역에 loader로 패칭한 menus 데이터 및 에러 상태 전달 */}
         <Sidebar menus={menus} isError={isError} />
-        {/* 현재 선택된 메뉴에 대한 title 값 및 에러 상태 전달 */}
-        <Main title={currentTitle} isError={isError} />
+        {/* Keep-Alive 캐시 및 열린 탭 정보를 Main 컴포넌트에 전달 */}
+        <Main
+          title={currentTitle}
+          isError={isError}
+          tabs={tabs}
+          activePath={location.pathname}
+          outletCache={outletCache}
+        />
       </div>
     </div>
   );

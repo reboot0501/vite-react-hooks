@@ -255,6 +255,10 @@
     {
       "text": "zustand  학습하기(수정)",
       "id": "7I9vk12VhfQ"
+    },
+    {
+      "text": "스프링시큐리티 학습하기",
+      "id": "larSfb0jCDs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,3 +1,5 @@
+// src/shared/api/index.ts
+
 export * from './auth-interceptor';
 export * from './axios-instance';
 export * from './error-handler';
