@@ -99,11 +99,6 @@
           "id": "6-1",
           "name": "useCallback 을 통한 기본 예제",
           "path": "/use-callback/basic-example-use-callback"
-        },
-        {
-          "id": "6-2",
-          "name": "useCallback 을 통한 성능향상",
-          "path": "/use-callback/performance-improvement-use-callback"
         }
       ]
     },

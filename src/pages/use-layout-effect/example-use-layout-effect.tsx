@@ -23,7 +23,7 @@ const ExampleUseLayoutEffect = () => {
   // 화면이 그려지기 전에 스크롤을 내림 ( effect 오직이 실해 되는 동안 화면 그려지는 것을 블록킹하고 있음)
   useLayoutEffect(() => {
     if (numbers.length === 0) return;
-    for (let i = 0; i < 3000000000; i++) {}
+    for (let i = 0; i < 300000000; i++) {}
     ref.current.scrollTop = ref.current.scrollHeight
   })
 

@@ -11,7 +11,7 @@ import './app-layout.container.css';
 /**
  * 실무 표준 권장 정책: 최대 동시 오픈 가능 탭 개수 (10개)
  */
-const MAX_TABS = 10;
+const MAX_TABS = 5;
 
 const AppLayout = () => {
   // "현재 어디에 있는가?" (위치 정보 조회)
