@@ -1,11 +1,14 @@
+// src/app/layout/ui/app-main.tsx
+
 import type { ReactNode } from "react";
+import { Outlet } from "@tanstack/react-router";
 import type { TabItem } from "./app-header";
 import "./app-main.css";
 
 interface MainProps {
   /**
    * 페이지 메인 타이틀 (필수 Prop)
-   * - 부모 컨테이너(AppLayout)에서 URL(location.pathname) 매핑 및 
+   * - 부모 컨테이너(AppLayout)에서 URL(location.pathname) 매핑 및
    *   Fallback(?? '메인 콘텐츠') 처리를 완료한 확정된 제목 문자열을 전달받음
    */
   title: string;
@@ -23,6 +26,7 @@ interface MainProps {
  * 메인 콘텐츠 영역을 담당하는 프레젠테이션 컴포넌트(Presentational Component)
  * - 부모로부터 전달받은 title을 상단 헤더에 표출
  * - 각 탭별 화면 인스턴스(outletCache)를 보존하며, 활성 탭만 display: block으로 노출 (Keep-Alive)
+ * - 탭에 속하지 않는 예외 경로(404 NotFound 등) 진입 시 TanStack Router의 <Outlet />을 렌더링
  */
 const Main = ({
   title,
@@ -31,6 +35,8 @@ const Main = ({
   activePath = "",
   outletCache = {},
 }: MainProps) => {
+  const isActiveTabMatched = tabs.some((tab) => tab.path === activePath);
+
   return (
     <main className="app-main">
       <section className="main-header">
@@ -47,19 +53,23 @@ const Main = ({
             </p>
           </div>
         ) : (
-          /* Keep-Alive: 열려있는 탭들을 DOM에 유지하고 활성 탭만 노출 */
-          tabs.map((tab) => (
-            <div
-              key={tab.path}
-              className="tab-content-panel"
-              style={{
-                display: tab.path === activePath ? "block" : "none",
-                height: "100%",
-              }}
-            >
-              {outletCache[tab.path]}
-            </div>
-          ))
+          <>
+            {/* Keep-Alive: 열려있는 탭들을 DOM에 유지하고 활성 탭만 노출 */}
+            {tabs.map((tab) => (
+              <div
+                key={tab.path}
+                className="tab-content-panel"
+                style={{
+                  display: tab.path === activePath ? "block" : "none",
+                  height: "100%",
+                }}
+              >
+                {outletCache[tab.path]}
+              </div>
+            ))}
+            {/* 등록된 메뉴 탭이 아닌 경로(예: 404 Not Found)일 경우 기본 Outlet 렌더링 */}
+            {!isActiveTabMatched && <Outlet />}
+          </>
         )}
       </section>
     </main>

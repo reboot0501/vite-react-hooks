@@ -55,5 +55,17 @@ desktop.ini
 .stylelintcache
 .cache/
 .vite/
+.pnpm-store/
 coverage/
 .nyc_output/
+
+# Vite 임시 파일 (Vite temp files)
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Playwright & MCP 임시 파일 (Playwright & MCP)
+.playwright-mcp/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

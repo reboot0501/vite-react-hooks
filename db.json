@@ -223,13 +223,13 @@
     },
     {
       "id": "14",
-      "name": "tanstack-query-jotai",
-      "path": "/tanstack-query-jotai",
+      "name": "tanstack-query-zustand",
+      "path": "/tanstack-query-zustand",
       "children": [
         {
           "id": "14-1",
-          "name": "tanstack-query-jotai 기본 예제",
-          "path": "/tanstack-query-jotai/example-tanstack-query-jotai"
+          "name": "tanstack-query-zustand 기본 예제",
+          "path": "/tanstack-query-zustand/example-tanstack-query-zustand"
         }
       ]
     }

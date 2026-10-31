@@ -1,2 +1,4 @@
-export * from './model/menu.entity';
-export * from './api/menu.api';
+// src/entities/menu/index.ts
+
+export * from './model';
+export * from './api';

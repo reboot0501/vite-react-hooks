@@ -42,3 +42,21 @@ export const flattenMenuTitles = (menus: Menu[]): Record<string, string> => {
   traverse(menus);
   return result;
 };
+
+/**
+ * 계층형 메뉴 배열에서 최초 진입 시 이동할 첫 번째 Leaf(최하위 화면) 경로를 탐색하는 순수 함수
+ */
+export const findFirstLeafPath = (
+  menus: Menu[],
+  fallbackPath = '/use-state/timer',
+): string => {
+  for (const menu of menus) {
+    if (menu.children && menu.children.length > 0) {
+      return menu.children[0].path;
+    }
+    if (menu.path) {
+      return menu.path;
+    }
+  }
+  return fallbackPath;
+};

@@ -1,0 +1,3 @@
+# 모든 텍스트 파일의 줄바꿈(Line Ending)을 LF로 통일
+* text=auto eol=lf
+

@@ -1,6 +1,6 @@
 // src/shared/api/error-handler.ts
 import { isAxiosError } from 'axios';
-import { appStore, errorAtom } from '@/shared/model';
+import { useErrorStore } from '@/shared/model';
 
 /** 백엔드 에러 응답 바디 형태 */
 interface ApiErrorResponse {
@@ -29,7 +29,7 @@ interface ApiErrorResponse {
  *
  * ─ 현재 처리 내용 ─────────────────────────────────────────────────────────────
  * - 401 Unauthorized → 팝업 표시, 확인 시 로그인 페이지(/login)로 이동
- * - 나머지 에러      → 전역 에러 팝업용 atom(errorAtom)에 메시지 설정
+ * - 나머지 에러      → 전역 에러 팝업용 Zustand Store(useErrorStore)에 메시지 설정
  *
  * 상태만 변경하고 다시 throw 하지 않는다.
  * (onError 콜백 안에서 throw 하면 처리되지 않은 예외만 추가로 발생하기 때문)
@@ -40,10 +40,11 @@ export function handleApiError(error: unknown) {
     // axios 에러인 경우에만 response 정보를 안전하게 추출
     const axiosError = isAxiosError<ApiErrorResponse>(error) ? error : undefined;
     const status = axiosError?.response?.status;
+    const { setError } = useErrorStore.getState();
 
     // 1. 401 Unauthorized: 인증 만료 또는 미인증 → 팝업 표시 후 확인 시 로그인 페이지로 이동
     if (status === 401) {
-        appStore.set(errorAtom, {
+        setError({
             message: "인증이 만료되었거나 권한이 없습니다.\n다시 로그인해주세요.",
             onConfirm: () => {
                 window.location.href = "/login";
@@ -63,7 +64,7 @@ export function handleApiError(error: unknown) {
     const errorCode = responseData?.errorCode;
     const errorType = responseData?.errorType;
 
-    // 3. 전역 에러 상태(Atom)에 메시지 설정 → Alert 팝업 표시 유도
-    // Provider와 동일한 appStore 를 사용하므로 컴포넌트 외부에서 set 해도 UI에 반영된다.
-    appStore.set(errorAtom, { errorCode, errorType, message });
+    // 3. 전역 에러 상태(Zustand Store)에 메시지 설정 → Alert 팝업 표시 유도
+    // Zustand는 모듈 싱글톤 스토어이므로 React 컴포넌트 외부에서 getState().setError()를 호출해도 즉시 UI에 반영된다.
+    setError({ errorCode, errorType, message });
 }

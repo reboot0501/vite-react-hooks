@@ -9,7 +9,7 @@ const App = () => {
   return (
     <AppProvider>
       <AppRouter />
-      {/* 전역 에러 팝업: errorAtom 값이 설정되면 표시 (앱 전체에서 한 번만 배치) */}
+      {/* 전역 에러 팝업: useErrorStore의 error 값이 설정되면 표시 (앱 전체에서 한 번만 배치) */}
       <ErrorAlert />
     </AppProvider>
   );

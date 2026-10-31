@@ -1,5 +1,7 @@
+// src/app/layout/ui/app-sidebar.tsx
+
 import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { type Menu } from "@/entities/menu";
 import "./app-sidebar.css";
 
@@ -9,7 +11,29 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ menus = [], isError = false }: SidebarProps) => {
+  const router = useRouter();
   const location = useLocation();
+
+  // 현재 열려있는 1depth 메뉴 식별자 (단일 아코디언: 한 번에 단 하나의 1depth만 열림)
+  const [openMenuId, setOpenMenuId] = useState<string | null>(() => {
+    // 최초 마운트 시 현재 URL이 속한 1depth 메뉴를 찾아 기본 열림 상태로 지정
+    const activeParent = menus.find((item) =>
+      item.children?.some((child) => child.path === location.pathname)
+    );
+    return activeParent ? (activeParent.id || activeParent.name) : null;
+  });
+
+  // URL 변경(네비게이션 완료) 시 현재 경로가 속한 1depth 메뉴가 있다면 해당 메뉴만 열림 유지 및 동기화
+  useEffect(() => {
+    return router.subscribe("onResolved", ({ toLocation }) => {
+      const activeParent = menus.find((item) =>
+        item.children?.some((child) => child.path === toLocation.pathname)
+      );
+      if (activeParent) {
+        setOpenMenuId(activeParent.id || activeParent.name);
+      }
+    });
+  }, [router, menus]);
 
   if (isError) {
     return (
@@ -26,25 +50,6 @@ const Sidebar = ({ menus = [], isError = false }: SidebarProps) => {
       </aside>
     );
   }
-
-  // 현재 열려있는 1depth 메뉴 식별자 (단일 아코디언: 한 번에 단 하나의 1depth만 열림)
-  const [openMenuId, setOpenMenuId] = useState<string | null>(() => {
-    // 최초 마운트 시 현재 URL이 속한 1depth 메뉴를 찾아 기본 열림 상태로 지정
-    const activeParent = menus.find((item) =>
-      item.children?.some((child) => child.path === location.pathname)
-    );
-    return activeParent ? (activeParent.id || activeParent.name) : null;
-  });
-
-  // URL 변경 시 현재 경로가 속한 1depth 메뉴가 있다면 해당 메뉴만 열림 유지 및 동기화
-  useEffect(() => {
-    const activeParent = menus.find((item) =>
-      item.children?.some((child) => child.path === location.pathname)
-    );
-    if (activeParent) {
-      setOpenMenuId(activeParent.id || activeParent.name);
-    }
-  }, [location.pathname, menus]);
 
   // 1depth 메뉴 클릭 핸들러 (토글 기능: 다른 1depth 클릭 시 기존 열린 1depth는 자동 닫힘)
   const handleToggleDepth1 = (menuKey: string) => {
@@ -89,14 +94,13 @@ const Sidebar = ({ menus = [], isError = false }: SidebarProps) => {
                       {item.children!.map((subItem) => (
                         <li key={subItem.path}>
                           {/* leaf node 2depth 메뉴 클릭 시에만 해당 화면 컴포넌트 온디맨드(lazy) 로딩 */}
-                          <NavLink
+                          <Link
                             to={subItem.path}
-                            className={({ isActive }) =>
-                              `sidebar-nav-link ${isActive ? "active" : ""}`.trim()
-                            }
+                            className="sidebar-nav-link"
+                            activeProps={{ className: "active" }}
                           >
                             {subItem.name}
-                          </NavLink>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -108,15 +112,14 @@ const Sidebar = ({ menus = [], isError = false }: SidebarProps) => {
             // 자식이 없는 일반 1 depth 메뉴
             return (
               <li key={item.path}>
-                <NavLink
+                <Link
                   to={item.path}
                   onClick={handleLeaf1DepthClick}
-                  className={({ isActive }) =>
-                    `sidebar-nav-link ${isActive ? "active" : ""}`.trim()
-                  }
+                  className="sidebar-nav-link"
+                  activeProps={{ className: "active" }}
                 >
                   {item.name}
-                </NavLink>
+                </Link>
               </li>
             );
           })}
